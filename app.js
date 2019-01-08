@@ -38,7 +38,33 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
         //Next Player
-        activePlayer === 0 ? activePlayer=1 : activePlayer=0;
+        nextPlayer();
+
+    }
+});
+
+document.querySelector('.btn-hold').addEventListener('click', function () {
+    //add points to player score
+    scores[activePlayer] += roundScore;
+    //clear the current points of the round
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+    //check if player wins
+    scores[activePlayer] >= 100 ? (
+        document.querySelector('#name-' + activePlayer).textContent = "Winner!",
+        document.querySelector('.dice').style.display = 'none',
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner'),
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active')
+    )
+
+    : nextPlayer();
+    //Next Player
+    
+});
+
+
+function nextPlayer () {
+    activePlayer === 0 ? activePlayer=1 : activePlayer=0;
         roundScore = 0;
 
         document.getElementById('current-0').textContent = '0';
@@ -46,6 +72,4 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         document.querySelector('.player-0-panel').classList.toggle('active');
         document.querySelector('.player-1-panel').classList.toggle('active');
         document.querySelector('.dice').style.display = 'none';
-
-    }
-});
+}
